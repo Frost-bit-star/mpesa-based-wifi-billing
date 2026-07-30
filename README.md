@@ -1,111 +1,197 @@
+# MikroTik MPesa WiFi Billing System
 
-# Mpesa_Based-WiFi-Billing-System
-A WiFi billing system that allows users to purchase internet access via MPesa payments (STK Push). Ideal for cybercafés, small businesses, and public WiFi hotspots.
+![GitHub License](https://img.shields.io/github/license/Frost-bit-star/mpesa-based-wifi-billing)
+![GitHub Stars](https://img.shields.io/github/stars/Frost-bit-star/mpesa-based-wifi-billing)
+![GitHub Issues](https://img.shields.io/github/issues/Frost-bit-star/mpesa-based-wifi-billing)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/Frost-bit-star/mpesa-based-wifi-billing)
 
-**📌 FEATURES**
+![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?logo=node.js)
+![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql)
+![MikroTik](https://img.shields.io/badge/Router-MikroTik-red)
 
-✅ MPesa STK Push Integration – Users pay directly from their phone via STK Push.
+A complete WiFi billing system that allows users to purchase internet access through **MPesa STK Push payments**.
 
-✅ Time-Based Access.
+Built for cybercafés, small businesses, WISPs, and public WiFi hotspots.
 
-✅ Admin Dashboard – Track payments and manage users.
+The system integrates with **MikroTik routers** to automatically manage user access after successful payments.
 
-✅ MAC Address Whitelisting – Secure WiFi access via MikroTik integration.
+---
+
+# Features
+
+![MPesa](https://img.shields.io/badge/Payment-MPesa-green)
+![Hotspot](https://img.shields.io/badge/Network-WiFi%20Hotspot-blue)
+
+## MPesa STK Push
+
+Users can pay for internet packages directly from their phones.
+
+## Time-Based Access
+
+Automatically control internet access based on purchased duration.
+
+## Admin Dashboard
+
+Manage:
+
+- Users
+- Payments
+- Packages
+- Router access
+
+## MikroTik Integration
+
+Automatically whitelist customer devices after payment confirmation.
+
+---
+
+# Remote MikroTik Management With TunGuard
+
+![TunGuard](https://img.shields.io/badge/VPN-TunGuard-success)
+![Self Hosted](https://img.shields.io/badge/Infrastructure-Self%20Hosted-blue)
+
+Many MikroTik routers are behind CGNAT and do not have a public IP address.
+
+**TunGuard** solves this by creating a secure private connection between your MikroTik network and a public server.
+
+No public IP required.
+
+## TunGuard Setup
+
+1. Deploy TunGuard on a VPS with a public IP.
+2. Connect your MikroTik router through the TunGuard tunnel.
+3. Manage your hotspot remotely.
+4. Allow your billing system to communicate with MikroTik securely.
+
+TunGuard repository:
+
+https://github.com/TunGuard/tanguard-binary
+
+Useful for:
+
+- WISPs behind CGNAT
+- Remote hotspot management
+- Distributed WiFi networks
+- Secure MikroTik administration
+
+---
+
+# Architecture
+Customer | | WiFi Hotspot | | MikroTik Router | | TunGuard Secure Tunnel | | Billing Server | | MPesa API
+
+---
+
+# Tech Stack
+
+## Frontend
+
+![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-UI-06B6D4?logo=tailwindcss)
+
+- React
+- Tailwind CSS
 
 
-**🛠️ TECH STACK**
+## Backend
 
-Frontend: React + Tailwind CSS
+![Node](https://img.shields.io/badge/Node.js-API-339933?logo=node.js)
+![Express](https://img.shields.io/badge/Express-Framework-black?logo=express)
 
-Backend: Node.js + Express
-
-Database: MySQL
-
-Router Integration: MikroTik (MAC Address Whitelisting)
+- Node.js
+- Express
 
 
-**🔧 INSTALLATION & SETUP**
+## Database
 
-1️⃣ Clone the Repository
+![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?logo=mysql)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)
 
-
-`cd Mpesa_Based-WiFi-Billing-System`
-
-
-
-2️⃣ Install Dependencies
+- MySQL
+- Prisma ORM
 
 
-`npm install`
+## Network
 
+![MikroTik](https://img.shields.io/badge/MikroTik-Router-red)
 
+- MikroTik RouterOS
+- MAC Address Whitelisting
 
-3️⃣ Set Up Environment Variables
+---
 
+# Installation
 
+## Clone Repository
+
+```bash
+git clone https://github.com/Frost-bit-star/mpesa-based-wifi-billing.git
+```
+#install Dependencies
+```
+npm install
+```
+Environment Variables
+Create .env
 ```
 MPESA_CONSUMER_KEY=your_key
 MPESA_CONSUMER_SECRET=your_secret
 MPESA_PASSKEY=your_passkey
 MPESA_SHORTCODE=your_shortcode
+
 DATABASE_URL=mysql://user:password@localhost/dbname
+
+JWT_SECRET=your_secret
+
 ```
-
-
-
-4️⃣ Run the Application
-
-
-### Start the backend
-`node index.js`
-
-### Start the frontend
-From the `Frontend/` folder:
+# Run Application
+Backend
 ```
-cp .env.local.example .env.local # if provided, otherwise create manually
-echo NEXT_PUBLIC_API_URL=http://localhost:5000 > .env.local
+node index.js
+```
+Frontend
+```
+cd Frontend
 npm install
 npm run dev
 ```
+## Security Improvements
 
-# 🚀 RECENT IMPROVEMENTS (2025)
+- JWT authentication
+- bcrypt password hashing
+- protected admin routes
+- Secure API handling
+- mproved error handling
+- MikroTik Workflow
+- user connects to WiFi
+```
+        ↓
 
-**Authentication & Security**
-- Refactored backend authentication to use Prisma ORM and secure password hashing (bcrypt).
-- Implemented robust admin login with JWT-based session management.
-- Added error handling and secure credential validation for all login flows.
+Selects internet package
 
-**Frontend Enhancements**
-- Redesigned admin login page with improved error feedback and user experience.
-- Dashboard now displays logged-in admin info and provides a logout button.
-- Added reusable authentication hook and protected route wrapper for admin-only pages.
+        ↓
 
-**Codebase & Runtime**
-- All components now use proper default/named exports and pass runtime checks.
-- Modularized authentication logic for maintainability and scalability.
-- Improved error handling and feedback throughout the stack.
+Pays via MPesa STK Push
 
-*I feel like this is the last part for this project, will nolonger be managing it.*
+        ↓
 
+Payment callback received
 
-*🤝 CONTRIBUTING*
+        ↓
 
-Feel free to submit issues and pull requests to improve the system!
+MAC address added to MikroTik
 
+        ↓
 
+Internet access enabled
+```
+### Contributing
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Issues and pull requests are welcome.
+License
 
+MIT License
+Contact
 
-
-
-
-
-***📞 CONTACT***
-
-For inquiries & support, reach out via: 
-
-*(Paid Consultations)* only
-
-📧 Email: hr@stackverify.site
+# Paid consultations and support:
+hr@stackverify.site
